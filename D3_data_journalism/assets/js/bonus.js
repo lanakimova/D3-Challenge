@@ -71,7 +71,7 @@ d3.csv("assets/data/data.csv").then(function(data) {
     let xPoverty = d3.select("#poverty");
 
     // scale x and y for default values (Smoke vs Income)
-    let x = income;
+    let x = incomes;
     let y = smoke;
 
     let xScale = d3.scaleLinear().domain([d3.min(x), d3.max(x)]).range([0, chartWidth]);
@@ -90,15 +90,15 @@ d3.csv("assets/data/data.csv").then(function(data) {
                                 .style('fill', '#bde0fe');
 
     //add abbr of states to each circle   
-    // let abbrGroup = chartGroup.selectAll("rect")
-    //             .data(abbrs).enter()
-    //             .append("text")
-    //             .attr("id", "circle-text")
-    //             .attr("x", function(d, i) {return xScale(x[i]) -5;})
-    //             .attr("y", function(d, i) {return yScale(y[i]) +2;})
-    //             .attr("font-size", "8px")
-    //             .attr("font-weight", "bold")
-    //             .text(function(d, i) {return d[i]});
+    let abbrGroup = chartGroup.selectAll("rect")
+                .data(abbrs).enter()
+                .append("text")
+                .attr("id", "circle-text")
+                .attr("x", function(d, i) {return xScale(x[i]) -5;})
+                .attr("y", function(d, i) {return yScale(y[i]) +2;})
+                .attr("font-size", "8px")
+                .attr("font-weight", "bold")
+                .text(function(d, i) {return abbrs[i]});
 
     let yAxis = d3.axisLeft(yScale);
     let xAxis = d3.axisBottom(xScale);
@@ -107,6 +107,7 @@ d3.csv("assets/data/data.csv").then(function(data) {
     chartGroup.append("g").attr('class', 'yaxis').call(yAxis);
                                 
     chartGroup.append("g").attr("transform", `translate(0, ${chartHeight})`).attr('class', 'xaxis').call(xAxis);
+    
     // change attr for link after click
     ySmoke.on("click", function (d) {
         y = smoke;
@@ -121,7 +122,7 @@ d3.csv("assets/data/data.csv").then(function(data) {
         chartGroup.selectAll('circle').transition().duration(1500).attr("cx", function(d, i) {return xScale(x[i]);})
                                                                     .attr("cy", function(d, i) {return yScale(y[i]);});
 
-        circleGroup.selectAll("#circle-text").transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
+        chartGroup.selectAll("#circle-text").data(abbrs).transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
                                                                         .attr("y", function(d, i) {return yScale(y[i]) +2;});
     });
 
@@ -138,7 +139,7 @@ d3.csv("assets/data/data.csv").then(function(data) {
         chartGroup.selectAll('circle').transition().duration(1500).attr("cx", function(d, i) {return xScale(x[i]);})
                                                                     .attr("cy", function(d, i) {return yScale(y[i]);});
         
-        circleGroup.selectAll("#circle-text").transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
+        chartGroup.selectAll("#circle-text").data(abbrs).transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
                                                                     .attr("y", function(d, i) {return yScale(y[i]) +2;});                                
     });
 
@@ -155,7 +156,7 @@ d3.csv("assets/data/data.csv").then(function(data) {
         chartGroup.selectAll('circle').transition().duration(1500).attr("cx", function(d, i) {return xScale(x[i]);})
                                                                     .attr("cy", function(d, i) {return yScale(y[i]);});
 
-        circleGroup.selectAll("#circle-text").transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
+        chartGroup.selectAll("#circle-text").transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
                                                                     .attr("y", function(d, i) {return yScale(y[i]) +2;});
     });
 
@@ -172,7 +173,7 @@ d3.csv("assets/data/data.csv").then(function(data) {
         chartGroup.selectAll('circle').transition().duration(1500).attr("cx", function(d, i) {return xScale(x[i]);})
                                                                     .attr("cy", function(d, i) {return yScale(y[i]);});
                                                                     
-        circleGroup.selectAll("#circle-text").transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
+        chartGroup.selectAll("#circle-text").transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
                                                                     .attr("y", function(d, i) {return yScale(y[i]) +2;});
 
     });
@@ -190,7 +191,7 @@ d3.csv("assets/data/data.csv").then(function(data) {
         chartGroup.selectAll('circle').transition().duration(1500).attr("cx", function(d, i) {return xScale(x[i]);})
                                                                     .attr("cy", function(d, i) {return yScale(y[i]);});
 
-        circleGroup.selectAll("#circle-text").transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
+        chartGroup.selectAll("#circle-text").transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
                                                                         .attr("y", function(d, i) {return yScale(y[i]) +2;});
 
     });
@@ -208,7 +209,7 @@ d3.csv("assets/data/data.csv").then(function(data) {
         chartGroup.selectAll('circle').transition().duration(1500).attr("cx", function(d, i) {return xScale(x[i]);})
                                                                     .attr("cy", function(d, i) {return yScale(y[i]);});
 
-        circleGroup.selectAll("#circle-text").transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
+        chartGroup.selectAll("#circle-text").transition().duration(1500).attr("x", function(d, i) {return xScale(x[i])-5;})
                                                                         .attr("y", function(d, i) {return yScale(y[i]) +2;});
     });
 
@@ -224,8 +225,8 @@ d3.csv("assets/data/data.csv").then(function(data) {
 
 });
 
-function rescale(x, y) {
-        yScale.domain([d3.min(y), d3.max(y)]).range([chartHeight, 0]);
-        chartGroup.select(".yaxis").transition().duration(1500).call(yAxis);
-        chartGroup.selectAll('circle').transition().duration(1500).attr("cx", function(d, i) {return xScale(x[i]);}).attr("cy", function(d, i) {return yScale(y[i]);});
-};
+// function rescale(x, y) {
+//         yScale.domain([d3.min(y), d3.max(y)]).range([chartHeight, 0]);
+//         chartGroup.select(".yaxis").transition().duration(1500).call(yAxis);
+//         chartGroup.selectAll('circle').transition().duration(1500).attr("cx", function(d, i) {return xScale(x[i]);}).attr("cy", function(d, i) {return yScale(y[i]);});
+// };
